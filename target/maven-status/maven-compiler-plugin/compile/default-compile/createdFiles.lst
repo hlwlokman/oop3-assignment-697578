@@ -1,0 +1,10 @@
+app\ImageDownloader.class
+app\MovieApp.class
+app\OmdbClient.class
+app\RestServer.class
+app\TmdbClient.class
+app\Movie.class
+app\Main.class
+app\HtmlRoute.class
+app\MovieDatabase.class
+app\MovieMerger.class
