@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.*;
 
 public class MovieDatabase {
+
+    // It make the "movies" table in the database if it does not already there
     static {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
             Statement stmt = conn.createStatement();
@@ -15,9 +17,12 @@ public class MovieDatabase {
         }
     }
 
+    // save one movie object into the database
     public static void save(Movie m) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO movies (title, year, director, genre, images, similar, watched, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            PreparedStatement ps = conn.prepareStatement(
+                "INSERT INTO movies (title, year, director, genre, images, similar, watched, rating) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
+            );
             ps.setString(1, m.title);
             ps.setString(2, m.year);
             ps.setString(3, m.director);
@@ -32,6 +37,8 @@ public class MovieDatabase {
         }
     }
 
+    // This method get a list of movies from database using pagination
+    // It use page number and limit to skip rows and return results
     public static List<Movie> list(int page, int limit) {
         List<Movie> movies = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
@@ -57,6 +64,7 @@ public class MovieDatabase {
         return movies;
     }
 
+    // mark one movie as watched in the database
     public static void updateWatched(int id) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
             PreparedStatement ps = conn.prepareStatement("UPDATE movies SET watched = 1 WHERE id = ?");
@@ -67,6 +75,7 @@ public class MovieDatabase {
         }
     }
 
+    // update the rating of a movie using its id
     public static void updateRating(int id, int rating) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
             PreparedStatement ps = conn.prepareStatement("UPDATE movies SET rating = ? WHERE id = ?");
@@ -78,6 +87,7 @@ public class MovieDatabase {
         }
     }
 
+    // delete a movie from the database 
     public static void delete(int id) {
         try (Connection conn = DriverManager.getConnection("jdbc:sqlite:movies.db")) {
             PreparedStatement ps = conn.prepareStatement("DELETE FROM movies WHERE id = ?");
