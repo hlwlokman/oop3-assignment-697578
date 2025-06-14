@@ -5,6 +5,5 @@ app\RestServer.class
 app\TmdbClient.class
 app\Movie.class
 app\Main.class
-app\HtmlRoute.class
 app\MovieDatabase.class
 app\MovieMerger.class
